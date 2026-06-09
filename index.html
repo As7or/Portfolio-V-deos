@@ -7,19 +7,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  :root { --black:#080808;--cream:#f0ebe0;--gold:#c9a84c;--gray:#888;--light-gray:#111;--border:rgba(255,255,255,0.06); }
+  :root{--black:#080808;--cream:#f0ebe0;--gold:#c9a84c;--gray:#888;--light-gray:#111;--border:rgba(255,255,255,0.06);}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{background:var(--black);color:var(--cream);font-family:'Barlow',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
   body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.35;}
   .cursor{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:transform .15s ease;transform:translate(-50%,-50%);}
   .cursor-ring{width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:all .25s ease;transform:translate(-50%,-50%);}
+
+  /* NAV */
   nav{position:fixed;top:0;left:0;right:0;padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center;z-index:100;}
   nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.92) 0%,transparent 100%);z-index:-1;}
   .nav-logo{font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:.1em;color:var(--cream);text-decoration:none;}
   .nav-links{display:flex;gap:2.5rem;list-style:none;}
   .nav-links a{color:var(--gray);text-decoration:none;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;transition:color .3s;}
   .nav-links a:hover{color:var(--gold);}
+
+  /* HERO */
   .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 6rem;position:relative;overflow:hidden;}
   .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 65% 40%,#1c1408 0%,var(--black) 65%);}
   .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,.015) 80px);pointer-events:none;}
@@ -30,9 +34,13 @@
   .hero-sub{max-width:480px;margin-top:2.5rem;font-size:.92rem;line-height:1.85;color:var(--gray);opacity:0;animation:fadeUp 1s .7s forwards;}
   .hero-scroll{position:absolute;bottom:2.5rem;right:3rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gray);opacity:0;animation:fadeUp 1s 1.2s forwards;}
   .hero-scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s 2s infinite;}
+
+  /* SECTIONS */
   section{padding:8rem 3rem;}
   .section-label{font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:4rem;display:flex;align-items:center;gap:1rem;}
   .section-label::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2);max-width:80px;}
+
+  /* ABOUT */
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
   .about-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1.1;font-weight:400;}
   .about-title strong{font-weight:900;display:block;}
@@ -42,14 +50,25 @@
   .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;padding-top:2rem;border-top:1px solid var(--border);}
   .stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--gold);}
   .stat-label{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:.3rem;}
+
+  /* WORKS HEADER */
   .works-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;}
   .works-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;}
   .filter-tabs{display:flex;gap:1.5rem;flex-wrap:wrap;}
   .filter-tab{background:none;border:none;color:var(--gray);font-family:'Barlow',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;padding:.5rem 0;border-bottom:1px solid transparent;transition:all .3s;}
   .filter-tab:hover,.filter-tab.active{color:var(--cream);border-color:var(--gold);}
-  .category-group{margin-bottom:5rem;}
-  .category-title{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gray);margin-bottom:1.5rem;margin-top:3rem;display:flex;align-items:center;gap:1rem;}
+
+  /* CATEGORY GROUP — with video background */
+  .category-group{margin-bottom:0;position:relative;padding:4rem 0;}
+  .category-bg{position:absolute;inset:0;overflow:hidden;z-index:0;}
+  .category-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;}
+  .category-bg video.active{opacity:.12;}
+  .category-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,var(--black) 0%,transparent 15%,transparent 85%,var(--black) 100%);}
+  .category-inner{position:relative;z-index:1;}
+  .category-title{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gray);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;}
   .category-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* VIDEO GRID */
   .video-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.2rem;}
   .video-card{position:relative;overflow:hidden;background:var(--light-gray);cursor:none;}
   .video-card.large{grid-column:span 8;}
@@ -63,11 +82,11 @@
   .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);width:52px;height:52px;border:1px solid rgba(201,168,76,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .4s;opacity:0;}
   .play-btn svg{fill:var(--gold);width:16px;margin-left:3px;}
   .video-card:hover .play-btn{opacity:1;transform:translate(-50%,-50%) scale(1);}
-  .ext-icon{position:absolute;top:1rem;right:1rem;width:28px;height:28px;opacity:0;transition:opacity .3s;}
-  .video-card:hover .ext-icon{opacity:0.7;}
   .video-platform{font-size:.56rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;}
   .video-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;margin-bottom:.25rem;line-height:1.3;}
   .video-desc{font-size:.7rem;color:var(--gray);letter-spacing:.04em;}
+
+  /* MODAL */
   .modal{position:fixed;inset:0;background:rgba(8,8,8,.96);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(12px);}
   .modal.open{opacity:1;pointer-events:all;}
   .modal-inner{width:min(900px,92vw);position:relative;}
@@ -75,16 +94,22 @@
   .modal-close{position:absolute;top:-3rem;right:0;background:none;border:none;color:var(--gray);font-family:'Barlow',sans-serif;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;cursor:none;transition:color .3s;display:flex;align-items:center;gap:.6rem;}
   .modal-close:hover{color:var(--cream);}
   .modal-close::before{content:'×';font-size:1.4rem;font-weight:300;line-height:1;}
+
+  /* FOOTER */
   footer{padding:5rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;}
   .footer-name{font-family:'Playfair Display',serif;font-size:.9rem;letter-spacing:.1em;}
   .footer-links{display:flex;gap:2rem;}
   .footer-links a{color:var(--gray);text-decoration:none;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;transition:color .3s;}
   .footer-links a:hover{color:var(--gold);}
   .footer-copy{font-size:.62rem;color:#444;letter-spacing:.1em;}
+
+  /* REVEAL */
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94);}
   .reveal.visible{opacity:1;transform:translateY(0);}
+
   @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
   @keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
   @media(max-width:900px){
     nav{padding:1.4rem 1.5rem}
     .nav-links{display:none}
@@ -124,7 +149,7 @@
   <div class="about-grid">
     <div><h2 class="about-title reveal">Cada vídeo<br><strong>es una decisión.</strong></h2></div>
     <div class="reveal">
-      <p class="about-text">Soy Ástor Entenza, ingeniero multimedia especialiazdo en la producción y edicióin audiovisual. Me apasiona contar historias visuales que conecten con las personas y potencien la imagen de marcas, empresas y proyectos creativos.</p>
+      <p class="about-text">Soy Ástor Entenza, ingeniero multimedia especializado en producción y edición de vídeo. Me apasiona contar historias visuales que conecten con las personas y potencien la imagen de marcas, empresas y proyectos creativos.</p>
       <p class="about-text">Gestiono todas las fases del proceso creativo: planificación, grabación, edición, animación y publicación. He trabajado con academias, productoras audiovisuales, marcas de moda y artistas internacionales.</p>
       <div class="skills-row">
         <span class="skill-tag">Edición de vídeo</span>
@@ -158,51 +183,36 @@
 
   <!-- DEPOL -->
   <div class="category-group" data-group="depol">
-    <div class="category-title reveal">DEPOL Formación — Video Producer & Editor · 2025</div>
-    <div class="video-grid">
-      <div class="video-card large reveal" data-platform="depol" data-url="https://www.instagram.com/reel/DXrawIrqvEc/">
-        <img class="video-thumb vertical" src="img/depol1.jpg" alt="Simulacro Real 2026">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">Simulacro Real 2026</div>
-          <div class="video-desc">Evento · 2025</div>
+    <div class="category-bg">
+      <video src="img/bg_depol_web.mp4" muted loop playsinline preload="none"></video>
+    </div>
+    <div class="category-inner">
+      <div class="category-title reveal">DEPOL Formación — Video Producer & Editor · 2025</div>
+      <div class="video-grid">
+        <div class="video-card large reveal" data-url="https://www.instagram.com/reel/DXrawIrqvEc/">
+          <img class="video-thumb vertical" src="img/depol1.jpg" alt="Simulacro Real 2026">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">Simulacro Real 2026</div><div class="video-desc">Evento · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card small reveal" data-platform="depol" data-url="https://www.instagram.com/reel/DPL-D9_issn/">
-        <img class="video-thumb vertical" src="img/depol2.jpg" alt="Sorteo Casco UIP">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">Sorteo Casco UIP</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DPL-D9_issn/">
+          <img class="video-thumb vertical" src="img/depol2.jpg" alt="Sorteo Casco UIP">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">Sorteo Casco UIP</div><div class="video-desc">Reel · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card small reveal" data-platform="depol" data-url="https://www.instagram.com/reel/DXOl3V3KMLD/">
-        <img class="video-thumb vertical" src="img/depol3.jpg" alt="7 Eximentes Art. 20">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">7 Eximentes Art. 20</div>
-          <div class="video-desc">Reel educativo · 2025</div>
+        <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DXOl3V3KMLD/">
+          <img class="video-thumb vertical" src="img/depol3.jpg" alt="7 Eximentes">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">7 Eximentes Art. 20</div><div class="video-desc">Reel educativo · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="depol" data-url="https://www.instagram.com/reel/DW1amUOKSVi/">
-        <img class="video-thumb vertical" src="img/depol4.jpg" alt="Sorteo Esquema DGP">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">Sorteo Esquema DGP</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DW1amUOKSVi/">
+          <img class="video-thumb vertical" src="img/depol4.jpg" alt="Sorteo Esquema">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">Sorteo Esquema DGP</div><div class="video-desc">Reel · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="depol" data-url="https://www.instagram.com/reel/DTsZzXvih93/">
-        <img class="video-thumb vertical" src="img/depol5.jpg" alt="Artes marciales">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">Contenido Academia</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DTsZzXvih93/">
+          <img class="video-thumb vertical" src="img/depol5.jpg" alt="Artes marciales">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">Contenido Academia</div><div class="video-desc">Reel · 2025</div></div>
         </div>
       </div>
     </div>
@@ -210,24 +220,21 @@
 
   <!-- MACARENA HOFFMANN -->
   <div class="category-group" data-group="dj">
-    <div class="category-title reveal">Macarena Hoffmann — DJ Internacional · 2024–actualidad</div>
-    <div class="video-grid">
-      <div class="video-card medium reveal" data-platform="dj" data-url="https://www.instagram.com/p/DYchQAZjPqw/">
-        <img class="video-thumb" src="img/dj_upcoming.jpg" alt="Upcoming Dates">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Macarena Hoffmann</div>
-          <div class="video-title">Upcoming Dates 2026</div>
-          <div class="video-desc">Diseño · 2025</div>
+    <div class="category-bg">
+      <video src="img/bg_dj_web.mp4" muted loop playsinline preload="none"></video>
+    </div>
+    <div class="category-inner">
+      <div class="category-title reveal">Macarena Hoffmann — DJ Internacional · 2024–actualidad</div>
+      <div class="video-grid">
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/p/DYchQAZjPqw/">
+          <img class="video-thumb" src="img/dj_upcoming.jpg" alt="Upcoming Dates">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Macarena Hoffmann</div><div class="video-title">Upcoming Dates 2026</div><div class="video-desc">Diseño · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="dj" data-url="https://www.instagram.com/reel/DYAKHtqMItu/">
-        <img class="video-thumb vertical" src="img/dj_twinflames.jpg" alt="Twin Flames">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Macarena Hoffmann</div>
-          <div class="video-title">Twin Flames</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DYAKHtqMItu/">
+          <img class="video-thumb vertical" src="img/dj_twinflames.jpg" alt="Twin Flames">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Macarena Hoffmann</div><div class="video-title">Twin Flames</div><div class="video-desc">Reel · 2025</div></div>
         </div>
       </div>
     </div>
@@ -235,51 +242,36 @@
 
   <!-- MANYER -->
   <div class="category-group" data-group="manyer">
-    <div class="category-title reveal">Manyer — Marca de Joyería · Community Manager · 2025</div>
-    <div class="video-grid">
-      <div class="video-card large reveal" data-platform="manyer" data-url="https://www.instagram.com/reel/DG-2kasIDyb/">
-        <img class="video-thumb vertical" src="img/manyer1.jpg" alt="Don't fit the mold">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Campaña de Marca</div>
-          <div class="video-desc">Reel · 2025</div>
+    <div class="category-bg">
+      <video src="img/bg_manyer_web.mp4" muted loop playsinline preload="none"></video>
+    </div>
+    <div class="category-inner">
+      <div class="category-title reveal">Manyer — Marca de Joyería · Community Manager · 2025</div>
+      <div class="video-grid">
+        <div class="video-card large reveal" data-url="https://www.instagram.com/reel/DG-2kasIDyb/">
+          <img class="video-thumb vertical" src="img/manyer_shirt.jpg" alt="Manyer shirt">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Campaña de Marca</div><div class="video-desc">Reel · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card small reveal" data-platform="manyer" data-url="https://www.instagram.com/reel/DGfw1Afo_po/">
-        <img class="video-thumb vertical" src="img/manyer2.jpg" alt="Good Mood">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Good Look, Good Mood</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DGfw1Afo_po/">
+          <img class="video-thumb vertical" src="img/manyer_goodmood.jpg" alt="Good Mood">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Good Look, Good Mood</div><div class="video-desc">Reel · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card small reveal" data-platform="manyer" data-url="https://www.instagram.com/reel/DGOBamoodl6/">
-        <img class="video-thumb vertical" src="img/manyer3.jpg" alt="Don't fit the mold">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Don't Fit the Mold</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DGOBamoodl6/">
+          <img class="video-thumb vertical" src="img/manyer_mold.jpg" alt="Don't fit the mold">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Don't Fit the Mold</div><div class="video-desc">Reel · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="manyer" data-url="https://www.instagram.com/reel/DF7urgpouJw/">
-        <img class="video-thumb vertical" src="img/manyer5.jpg" alt="Manyer books">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Identidad Visual</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DF7urgpouJw/">
+          <img class="video-thumb vertical" src="img/manyer_books.jpg" alt="Books">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Identidad Visual</div><div class="video-desc">Reel · 2025</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="manyer" data-url="https://www.instagram.com/reel/DGqNRRvo-ix/">
-        <img class="video-thumb vertical" src="img/manyer4.jpg" alt="Manyer wine">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Lifestyle</div>
-          <div class="video-desc">Reel · 2025</div>
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DGqNRRvo-ix/">
+          <img class="video-thumb vertical" src="img/manyer_wine.jpg" alt="Wine">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Lifestyle</div><div class="video-desc">Reel · 2025</div></div>
         </div>
       </div>
     </div>
@@ -287,74 +279,57 @@
 
   <!-- RELIFICTION -->
   <div class="category-group" data-group="relifiction">
-    <div class="category-title reveal">Relifiction — Productora Audiovisual · 2024–2025</div>
-    <div class="video-grid">
-      <div class="video-card medium reveal" data-platform="relifiction" data-url="https://youtu.be/16pl2lXXzn8">
-        <img class="video-thumb" src="https://img.youtube.com/vi/16pl2lXXzn8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/16pl2lXXzn8/hqdefault.jpg'" alt="Relifiction YT 1">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">YouTube · Relifiction</div>
-          <div class="video-title">Pieza Cinematográfica</div>
-          <div class="video-desc">Postproducción · 2024</div>
+    <div class="category-bg">
+      <video src="img/bg_relifiction_web.mp4" muted loop playsinline preload="none"></video>
+    </div>
+    <div class="category-inner">
+      <div class="category-title reveal">Relifiction — Productora Audiovisual · 2024–2025</div>
+      <div class="video-grid">
+        <div class="video-card medium reveal" data-url="https://youtu.be/16pl2lXXzn8">
+          <img class="video-thumb" src="https://img.youtube.com/vi/16pl2lXXzn8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/16pl2lXXzn8/hqdefault.jpg'" alt="Relifiction YT 1">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">YouTube · Relifiction</div><div class="video-title">Pieza Cinematográfica</div><div class="video-desc">Postproducción · 2024</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="relifiction" data-url="https://youtu.be/OMM6r1ZygiA">
-        <img class="video-thumb" src="https://img.youtube.com/vi/OMM6r1ZygiA/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/OMM6r1ZygiA/hqdefault.jpg'" alt="Relifiction YT 2">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">YouTube · Relifiction</div>
-          <div class="video-title">Producción Audiovisual</div>
-          <div class="video-desc">Postproducción · 2024</div>
+        <div class="video-card medium reveal" data-url="https://youtu.be/OMM6r1ZygiA">
+          <img class="video-thumb" src="https://img.youtube.com/vi/OMM6r1ZygiA/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/OMM6r1ZygiA/hqdefault.jpg'" alt="Relifiction YT 2">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">YouTube · Relifiction</div><div class="video-title">Producción Audiovisual</div><div class="video-desc">Postproducción · 2024</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="relifiction" data-url="https://www.instagram.com/reel/DCg24euAtap/">
-        <img class="video-thumb" src="img/rel1.jpg" alt="Boxing">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Relifiction</div>
-          <div class="video-title">Contenido Deportivo</div>
-          <div class="video-desc">Reel · 2024</div>
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DCg24euAtap/">
+          <img class="video-thumb" src="img/rel1.jpg" alt="Boxing">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Relifiction</div><div class="video-title">Contenido Deportivo</div><div class="video-desc">Reel · 2024</div></div>
         </div>
-      </div>
-      <div class="video-card medium reveal" data-platform="relifiction" data-url="https://www.instagram.com/reel/DA6XRd9AIve/">
-        <img class="video-thumb" src="img/rel2.jpg" alt="Karamur">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Relifiction</div>
-          <div class="video-title">Pieza Gastronomía</div>
-          <div class="video-desc">Reel · 2024</div>
+        <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DA6XRd9AIve/">
+          <img class="video-thumb" src="img/rel2.jpg" alt="Karamur">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Relifiction</div><div class="video-title">Pieza Gastronomía</div><div class="video-desc">Reel · 2024</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- AMERICAN LANGUAGE ACADEMY -->
+  <!-- AMERICAN LANGUAGE ACADEMY — parallax thumbnail background -->
   <div class="category-group" data-group="ala">
-    <div class="category-title reveal">American Language Academy — Social Media Manager · 2024</div>
-    <div class="video-grid">
-      <div class="video-card large reveal" data-platform="ala" data-url="https://youtu.be/brb3XKsrp18">
-        <img class="video-thumb" src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/brb3XKsrp18/hqdefault.jpg'" alt="ALA YouTube">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">YouTube · Am. Language</div>
-          <div class="video-title">Entrevista / Evento</div>
-          <div class="video-desc">Filmmaker · 2024</div>
+    <div class="category-bg" style="background:url('https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg') center/cover no-repeat;opacity:.08;position:absolute;inset:0;z-index:0;"></div>
+    <div class="category-inner">
+      <div class="category-title reveal">American Language Academy — Social Media Manager · 2024</div>
+      <div class="video-grid">
+        <div class="video-card large reveal" data-url="https://youtu.be/brb3XKsrp18">
+          <img class="video-thumb" src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/brb3XKsrp18/hqdefault.jpg'" alt="ALA YouTube">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">YouTube · Am. Language</div><div class="video-title">Entrevista / Evento</div><div class="video-desc">Filmmaker · 2024</div></div>
         </div>
-      </div>
-      <div class="video-card small reveal" data-platform="ala" data-url="https://www.instagram.com/reel/C-ArROuiH9y/">
-        <img class="video-thumb vertical" src="img/alagasol.jpg" alt="Pau Gasol">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Am. Language</div>
-          <div class="video-title">Pau Gasol — Subtítulos</div>
-          <div class="video-desc">Reel · 2024</div>
+        <div class="video-card small reveal" data-url="https://www.instagram.com/reel/C-ArROuiH9y/">
+          <img class="video-thumb vertical" src="img/alagasol.jpg" alt="Pau Gasol">
+          <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+          <div class="video-overlay"><div class="video-platform">Instagram · Am. Language</div><div class="video-title">Pau Gasol — Subtítulos</div><div class="video-desc">Reel · 2024</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MODAL — abre Instagram/YouTube en nueva pestaña -->
 <div class="modal" id="modal">
   <div class="modal-inner">
     <button class="modal-close" id="modalClose">Cerrar</button>
@@ -369,7 +344,7 @@
   </div>
   <div class="footer-links">
     <a href="https://www.linkedin.com/in/%C3%A1stor-entenza-rodr%C3%ADguez-285b3921a" target="_blank">LinkedIn</a>
-    <a href="https://www.instagram.com/astorentenza/m" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/astorentenza/" target="_blank">Instagram</a>
   </div>
 </footer>
 
@@ -388,17 +363,40 @@
   const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*70);});},{threshold:.08});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
+  // Video backgrounds — play/fade when section enters viewport
+  const bgObs = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      const vid = entry.target.querySelector('.category-bg video');
+      if(!vid) return;
+      if(entry.isIntersecting){
+        if(vid.paused){
+          vid.play().catch(()=>{});
+        }
+        setTimeout(()=>vid.classList.add('active'), 100);
+      } else {
+        vid.classList.remove('active');
+        setTimeout(()=>{ if(!entry.isIntersecting) vid.pause(); }, 1200);
+      }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.category-group').forEach(g=>bgObs.observe(g));
+
   // Filters
   document.querySelectorAll('.filter-tab').forEach(tab=>{
     tab.addEventListener('click',()=>{
       document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
       tab.classList.add('active');
       const f=tab.dataset.filter;
-      document.querySelectorAll('.category-group').forEach(g=>{g.style.display=(f==='all'||g.dataset.group===f)?'':'none';});
+      document.querySelectorAll('.category-group').forEach(g=>{
+        g.style.display=(f==='all'||g.dataset.group===f)?'':'none';
+        // pause hidden videos
+        const vid=g.querySelector('.category-bg video');
+        if(vid && g.style.display==='none'){vid.pause();vid.classList.remove('active');}
+      });
     });
   });
 
-  // Click → YouTube embed or open Instagram in new tab
+  // Click handler
   const modal=document.getElementById('modal');
   const embed=document.getElementById('modalEmbed');
   document.querySelectorAll('.video-card').forEach(card=>{
@@ -406,12 +404,10 @@
       const url=card.dataset.url;
       if(!url)return;
       if(url.includes('youtube.com')||url.includes('youtu.be')){
-        // Extract YouTube ID and embed
-        const id=url.includes('youtu.be')?url.split('youtu.be/')[1]:url.split('v=')[1];
+        const id=url.includes('youtu.be')?url.split('youtu.be/')[1].split('?')[0]:new URLSearchParams(url.split('?')[1]).get('v');
         embed.src='https://www.youtube.com/embed/'+id+'?autoplay=1';
         modal.classList.add('open');
       } else {
-        // Instagram/TikTok → open in new tab to see real stats
         window.open(url,'_blank');
       }
     });
