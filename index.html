@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="lang-es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -133,6 +133,14 @@
     footer{flex-direction:column;align-items:flex-start;gap:1.5rem}
     .category-group{padding:3.5rem 0;}
   }
+
+  /* LANG SWITCHER */
+  .lang-switch{display:flex;gap:.6rem;align-items:center;}
+  .lang-btn{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gray);font-family:'Barlow',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;padding:.3rem .7rem;transition:all .3s;}
+  .lang-btn:hover,.lang-btn.active{color:var(--gold);border-color:var(--gold);}
+  [data-lang]{transition:opacity .2s;}
+  .lang-en [data-lang="es"]{display:none;}
+  .lang-es [data-lang="en"]{display:none;}
 </style>
 </head>
 <body>
@@ -142,9 +150,13 @@
 
 <nav>
   <a class="nav-logo" href="#">Ástor Entenza</a>
+  <div class="lang-switch">
+    <button class="lang-btn active" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
   <ul class="nav-links">
-    <li><a href="#works">Trabajos</a></li>
-    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#works"><span data-lang="es">Trabajos</span><span data-lang="en">Works</span></a></li>
+    <li><a href="#about"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></a></li>
   </ul>
 </nav>
 
@@ -157,20 +169,20 @@
   <div class="hero-lines"></div>
   <div class="hero-content">
     <div class="hero-tag">Video Producer · Editor · Community Manager</div>
-    <h1 class="hero-title">Imagen<br>que <em>conecta.</em></h1>
-    <p class="hero-sub">Ingeniero multimedia especializado en producción y edición de vídeo. Creo contenido audiovisual que potencia marcas, artistas y proyectos — dinámico, emocional y con resultados reales.</p>
+    <h1 class="hero-title"><span data-lang="es">Imagen<br>que <em>conecta.</em></span><span data-lang="en">Visuals<br>that <em>connect.</em></span></h1>
+    <p class="hero-sub"><span data-lang="es">Ingeniero multimedia especializado en producción y edición de vídeo. Creo contenido audiovisual que potencia marcas, artistas y proyectos — dinámico, emocional y con resultados reales.</span><span data-lang="en">Multimedia engineer specialised in video production and editing. I create audiovisual content that elevates brands, artists and projects — dynamic, emotional and results-driven.</span></p>
   </div>
   <div class="hero-scroll"><div class="hero-scroll-line"></div><span>Scroll</span></div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-label">Sobre mí</div>
+  <div class="section-label"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></div>
   <div class="about-grid">
-    <div><h2 class="about-title reveal">Cada vídeo<br><strong>es una decisión.</strong></h2></div>
+    <div><h2 class="about-title reveal"><span data-lang="es">Cada vídeo<br><strong>es una decisión.</strong></span><span data-lang="en">Every frame<br><strong>is a choice.</strong></span></h2></div>
     <div class="reveal">
-      <p class="about-text">Soy Ástor Entenza, ingeniero multimedia graduado en la Universitat de València. Me apasiona contar historias visuales que conecten con las personas y potencien la imagen de marcas, empresas y proyectos creativos.</p>
-      <p class="about-text">Gestiono todas las fases del proceso creativo: planificación, grabación, edición, animación y publicación. He trabajado con academias, productoras audiovisuales, marcas de moda y artistas internacionales.</p>
+      <p class="about-text"><span data-lang="es">Soy Ástor Entenza, ingeniero multimedia graduado en la Universitat de València. Me apasiona contar historias visuales que conecten con las personas y potencien la imagen de marcas, empresas y proyectos creativos.</span><span data-lang="en">I'm Ástor Entenza, a multimedia engineer graduated from the Universitat de València. I'm passionate about visual storytelling that connects with people and elevates the image of brands, companies and creative projects.</span></p>
+      <p class="about-text"><span data-lang="es">Gestiono todas las fases del proceso creativo: planificación, grabación, edición, animación y publicación. He trabajado con academias, productoras audiovisuales, marcas de moda y artistas internacionales.</span><span data-lang="en">I manage every stage of the creative process: planning, filming, editing, animation and publishing. I've worked with academies, production companies, fashion brands and international artists.</span></p>
       <div class="skills-row">
         <span class="skill-tag">Edición de vídeo</span>
         <span class="skill-tag">Motion Graphics</span>
@@ -180,9 +192,9 @@
         <span class="skill-tag">Community Manager</span>
       </div>
       <div class="about-stats">
-        <div><div class="stat-num">4+</div><div class="stat-label">Años</div></div>
-        <div><div class="stat-num">6</div><div class="stat-label">Clientes</div></div>
-        <div><div class="stat-num">∞</div><div class="stat-label">Ideas</div></div>
+        <div><div class="stat-num">4+</div><div class="stat-label"><span data-lang="es">Años</span><span data-lang="en">Years</span></div></div>
+        <div><div class="stat-num">6</div><div class="stat-label"><span data-lang="es">Clientes</span><span data-lang="en">Clients</span></div></div>
+        <div><div class="stat-num">∞</div><div class="stat-label"><span data-lang="es">Ideas</span><span data-lang="en">Ideas</span></div></div>
       </div>
     </div>
   </div>
@@ -191,9 +203,9 @@
 <!-- WORKS -->
 <section id="works">
   <div class="works-header reveal">
-    <h2 class="works-title">Trabajos</h2>
+    <h2 class="works-title"><span data-lang="es">Trabajos</span><span data-lang="en">Works</span></h2>
     <div class="filter-tabs">
-      <button class="filter-tab active" data-filter="all">Todos</button>
+      <button class="filter-tab active" data-filter="all"><span data-lang="es">Todos</span><span data-lang="en">All</span></button>
       <button class="filter-tab" data-filter="depol">DEPOL</button>
       <button class="filter-tab" data-filter="dj">Macarena Hoffmann</button>
       <button class="filter-tab" data-filter="manyer">Manyer</button>
@@ -205,7 +217,7 @@
   <!-- DEPOL -->
   <div class="category-group" data-group="depol">
     <div class="cat-video-bg" id="bg-depol"><video src="img/bg_depol_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">DEPOL Formación <span class="cat-sub">Video Producer & Editor · 2025</span></div>
+    <div class="category-title reveal">DEPOL Formación <span class="cat-sub"><span data-lang="es">Video Producer & Editor · 2025</span><span data-lang="en">Video Producer & Editor · 2025</span></span></div>
     <div class="video-grid">
       <div class="video-card large reveal" data-url="https://www.instagram.com/reel/DXrawIrqvEc/">
         <img class="video-thumb vertical" src="img/depol1.jpg" alt="Simulacro Real 2026">
@@ -258,7 +270,7 @@
   <!-- MACARENA HOFFMANN -->
   <div class="category-group" data-group="dj">
     <div class="cat-video-bg" id="bg-dj"><video src="img/bg_macarena_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">Macarena Hoffmann <span class="cat-sub">DJ Internacional · 2024–actualidad</span></div>
+    <div class="category-title reveal">Macarena Hoffmann <span class="cat-sub"><span data-lang="es">DJ Internacional · 2024–actualidad</span><span data-lang="en">International DJ · 2024–present</span></span></div>
     <div class="video-grid">
       <div class="video-card medium reveal" data-url="https://www.instagram.com/p/DYchQAZjPqw/">
         <img class="video-thumb" src="img/dj_upcoming.jpg" alt="Upcoming Dates">
@@ -278,13 +290,31 @@
           <div class="video-desc">Reel · 2025</div>
         </div>
       </div>
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/p/DZ-BcGeDA0M/">
+        <img class="video-thumb" src="img/dj_datesjj.jpg" alt="June July Dates">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay">
+          <div class="video-platform">Instagram · Macarena Hoffmann</div>
+          <div class="video-title"><span data-lang="es">June / July Dates 2025</span><span data-lang="en">June / July Dates 2025</span></div>
+          <div class="video-desc"><span data-lang="es">Diseño · 2025</span><span data-lang="en">Design · 2025</span></div>
+        </div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.youtube.com/watch?v=UHGER9rD-g8">
+        <img class="video-thumb" src="https://img.youtube.com/vi/UHGER9rD-g8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/UHGER9rD-g8/hqdefault.jpg'" alt="Macarena YouTube">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay">
+          <div class="video-platform">YouTube · Macarena Hoffmann</div>
+          <div class="video-title"><span data-lang="es">Contenido Visual</span><span data-lang="en">Visual Content</span></div>
+          <div class="video-desc"><span data-lang="es">Producción · 2025</span><span data-lang="en">Production · 2025</span></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- MANYER -->
   <div class="category-group" data-group="manyer">
     <div class="cat-video-bg" id="bg-manyer"><video src="img/bg_manyer_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">Manyer <span class="cat-sub">Marca de Joyería · Community Manager · 2025</span></div>
+    <div class="category-title reveal">Manyer <span class="cat-sub"><span data-lang="es">Marca de Joyería · Community Manager · 2025</span><span data-lang="en">Jewellery Brand · Community Manager · 2025</span></span></div>
     <div class="video-grid">
       <div class="video-card large reveal" data-url="https://www.instagram.com/reel/DG-2kasIDyb/">
         <img class="video-thumb vertical" src="img/manyer1.jpg" alt="Manyer shirt">
@@ -337,7 +367,7 @@
   <!-- RELIFICTION -->
   <div class="category-group" data-group="relifiction">
     <div class="cat-video-bg" id="bg-relifiction"><video src="img/bg_relifiction_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">Relifiction <span class="cat-sub">Productora Audiovisual · 2024–2025</span></div>
+    <div class="category-title reveal">Relifiction <span class="cat-sub"><span data-lang="es">Productora Audiovisual · 2024–2025</span><span data-lang="en">Production Company · 2024–2025</span></span></div>
     <div class="video-grid">
       <div class="video-card medium reveal" data-url="https://youtu.be/16pl2lXXzn8">
         <img class="video-thumb" src="https://img.youtube.com/vi/16pl2lXXzn8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/16pl2lXXzn8/hqdefault.jpg'" alt="Relifiction YT 1">
@@ -380,7 +410,7 @@
 
   <!-- AMERICAN LANGUAGE ACADEMY -->
   <div class="category-group" data-group="ala">
-    <div class="category-title reveal">American Language Academy <span class="cat-sub">Social Media Manager · 2024</span></div>
+    <div class="category-title reveal">American Language Academy <span class="cat-sub"><span data-lang="es">Social Media Manager · 2024</span><span data-lang="en">Social Media Manager · 2024</span></span></div>
     <div class="video-grid">
       <div class="video-card large reveal" data-url="https://youtu.be/brb3XKsrp18">
         <img class="video-thumb" src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/brb3XKsrp18/hqdefault.jpg'" alt="ALA YouTube">
@@ -407,7 +437,7 @@
 <!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-inner">
-    <button class="modal-close" id="modalClose">Cerrar</button>
+    <button class="modal-close" id="modalClose"><span data-lang="es">Cerrar</span><span data-lang="en">Close</span></button>
     <iframe class="modal-embed" id="modalEmbed" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
   </div>
 </div>
@@ -485,6 +515,19 @@
   document.getElementById('modalClose').addEventListener('click',()=>{modal.classList.remove('open');embed.src='';});
   modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('open');embed.src='';}});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){modal.classList.remove('open');embed.src='';}});
+
+  // Language switcher
+  function setLang(lang) {
+    document.documentElement.className = document.documentElement.className.replace(/lang-\S+/g, '') + ' lang-' + lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.lang-btn[onclick*=\'' + lang + '\']').classList.add('active');
+    localStorage.setItem('portfolio-lang', lang);
+  }
+  // Restore saved lang
+  const savedLang = localStorage.getItem('portfolio-lang');
+  if (savedLang) setLang(savedLang);
+
 </script>
 </body>
 </html>
