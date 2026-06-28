@@ -88,6 +88,7 @@
   .video-card.small{grid-column:span 4;}
   .video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94),filter .4s;filter:grayscale(15%);}
   .video-thumb.vertical{aspect-ratio:9/16;max-height:300px;}
+  .video-thumb.img{width: 100%;height: 100%;object-fit: cover;display: block;}
   .video-card:hover .video-thumb{transform:scale(1.06);filter:grayscale(0%);}
   .video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.95) 0%,rgba(8,8,8,.1) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;opacity:0;transition:opacity .4s;}
   .video-card:hover .video-overlay{opacity:1;}
@@ -413,7 +414,7 @@
     <div class="category-title reveal">American Language Academy <span class="cat-sub"><span data-lang="es">Social Media Manager · Academia de Inglés · 2024</span><span data-lang="en">Social Media Manager · English Academy · 2024</span></span></div>
     <div class="video-grid">
       <div class="video-card large reveal" data-url="https://youtu.be/brb3XKsrp18">
-        <img class="video-thumb" src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/brb3XKsrp18/hqdefault.jpg'" alt="ALA YouTube">
+        <img class="video-thumb vertical" src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/brb3XKsrp18/hqdefault.jpg'" alt="ALA YouTube">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
         <div class="video-overlay">
           <div class="video-platform">YouTube · Am. Language</div>
@@ -422,7 +423,7 @@
         </div>
       </div>
       <div class="video-card small reveal" data-url="https://www.instagram.com/reel/C-ArROuiH9y/">
-        <img class="video-thumb" src="img/alagasol.jpg" alt="Pau Gasol" style="object-position:center 20%">
+        <img class="video-thumb img" src="img/alagasol.jpg" alt="Pau Gasol" style="object-position:center 20%">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
         <div class="video-overlay">
           <div class="video-platform">Instagram · Am. Language</div>
