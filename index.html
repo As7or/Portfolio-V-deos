@@ -4,436 +4,446 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ástor Entenza — Video Producer & Editor</title>
+<meta name="description" content="Ástor Entenza — Ingeniero multimedia especializado en producción y edición de vídeo. Portfolio de trabajos para DEPOL Formación, Macarena Hoffmann, Manyer y más.">
+<meta name="theme-color" content="#08080a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,900;1,400&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--black:#080808;--cream:#f0ebe0;--gold:#c9a84c;--gray:#888;--light-gray:#111;--border:rgba(255,255,255,0.06);}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--black);color:var(--cream);font-family:'Barlow',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
-  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.35;}
+/* ============ TOKENS ============ */
+:root{
+  --black:#08080a;
+  --charcoal:#111113;
+  --charcoal-2:#0c0c0e;
+  --cream:#f2ece0;
+  --gold:#c9a84c;
+  --gold-bright:#e8ca7e;
+  --gold-soft:rgba(201,168,76,.35);
+  --gold-faint:rgba(201,168,76,.14);
+  --gray:#8d8879;
+  --border:rgba(242,236,224,.08);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-in-out:cubic-bezier(.77,0,.175,1);
+  --serif:'Playfair Display',serif;
+  --sans:'Barlow',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--cream);font-family:var(--sans);font-weight:300;overflow-x:hidden;cursor:none;}
+@media(pointer:coarse){body{cursor:auto;}}
+img,video{max-width:100%;display:block;}
+button{font-family:inherit;}
+a{color:inherit;}
 
-  /* CURSOR */
-  .cursor{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:transform .15s ease;transform:translate(-50%,-50%);}
-  .cursor-ring{width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:all .25s ease;transform:translate(-50%,-50%);}
+/* grain — fixed, pointer-events none, GPU cheap */
+.grain{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;opacity:.35;}
 
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;padding:1.8rem 3rem;display:flex;justify-content:space-between;align-items:center;z-index:100;}
-  nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.92) 0%,transparent 100%);z-index:-1;}
-  .nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;letter-spacing:.1em;color:var(--cream);text-decoration:none;}
-  .nav-links{display:flex;gap:2.5rem;list-style:none;}
-  .nav-links a{color:var(--gray);text-decoration:none;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;transition:color .3s;}
-  .nav-links a:hover{color:var(--gold);}
+/* ============ CURSOR ============ */
+.cursor{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:transform .15s var(--ease-out);transform:translate(-50%,-50%);top:0;left:0;}
+.cursor-ring{width:38px;height:38px;border:1px solid rgba(201,168,76,.45);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:width .3s var(--ease-out),height .3s var(--ease-out),border-color .3s,background .3s;transform:translate(-50%,-50%);top:0;left:0;display:flex;align-items:center;justify-content:center;}
+.cursor-ring span{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-bright);opacity:0;transition:opacity .25s;white-space:nowrap;}
+.cursor-ring.tagged{width:64px;height:64px;background:rgba(8,8,10,.55);backdrop-filter:blur(4px);}
+.cursor-ring.tagged span{opacity:1;}
+@media(pointer:coarse){.cursor,.cursor-ring{display:none;}}
 
-  /* HERO */
-  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 7rem;position:relative;overflow:hidden;}
-  .hero-video-bg{position:absolute;inset:0;z-index:0;}
-  .hero-video-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(2px) brightness(0.5) saturate(1.4);}
-  .hero-video-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,rgba(8,8,8,.3) 50%,rgba(8,8,8,.5) 100%);}
-  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 65% 40%,rgba(28,20,8,.4) 0%,transparent 65%);z-index:1;}
-  .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,.012) 80px);pointer-events:none;z-index:1;}
-  .hero-content{position:relative;z-index:2;}
-  .hero-tag{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;opacity:0;animation:fadeUp 1s .3s forwards;display:flex;align-items:center;gap:1rem;}
-  .hero-tag::before{content:'';display:block;width:40px;height:1px;background:var(--gold);}
-  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(4rem,12vw,10.5rem);font-weight:900;line-height:.88;letter-spacing:-.02em;opacity:0;animation:fadeUp 1s .5s forwards;}
-  .hero-title em{font-style:italic;font-weight:400;color:var(--gold);}
-  .hero-sub{max-width:500px;margin-top:2.5rem;font-size:1rem;line-height:1.9;color:rgba(240,235,224,.75);opacity:0;animation:fadeUp 1s .7s forwards;}
-  .hero-scroll{position:absolute;bottom:2.5rem;right:3rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gray);opacity:0;animation:fadeUp 1s 1.2s forwards;z-index:2;}
-  .hero-scroll-line{width:1px;height:55px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s 2s infinite;}
+/* ============ TIMELINE RAIL (signature element) ============ */
+.timeline-rail{position:fixed;right:2.2rem;top:50%;transform:translateY(-50%);z-index:150;display:flex;align-items:center;height:56vh;}
+.timeline-track{position:relative;width:1px;height:100%;background:var(--border);}
+.timeline-fill{position:absolute;top:0;left:0;width:100%;background:linear-gradient(to bottom,var(--gold),var(--gold-bright));height:0%;transition:height .1s linear;}
+.timeline-ticks{position:absolute;inset:0;list-style:none;}
+.tick{position:absolute;left:0;transform:translate(-50%,-50%);}
+.tick-btn{position:relative;width:22px;height:22px;margin-left:-11px;background:none;border:none;cursor:none;display:flex;align-items:center;justify-content:center;}
+.tick-dot{width:5px;height:5px;border-radius:50%;background:var(--gray);transition:all .35s var(--ease-out);}
+.tick.active .tick-dot{background:var(--gold-bright);width:7px;height:7px;box-shadow:0 0 8px rgba(232,201,126,.7);}
+.tick-label{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);white-space:nowrap;opacity:0;transition:opacity .3s var(--ease-out),transform .3s var(--ease-out);pointer-events:none;transform:translateY(-50%) translateX(6px);}
+.tick:hover .tick-label,.tick.active .tick-label{opacity:1;transform:translateY(-50%) translateX(0);}
+.tick.active .tick-label{color:var(--gold-bright);}
+@media(max-width:900px){
+  .timeline-rail{display:none;}
+  .mobile-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gold-bright));z-index:150;width:0%;transition:width .1s linear;}
+}
+@media(min-width:901px){.mobile-progress{display:none;}}
 
-  /* SECTIONS */
-  section{padding:10rem 3rem;}
-  .section-label{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:4.5rem;display:flex;align-items:center;gap:1rem;}
-  .section-label::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2);max-width:80px;}
+/* ============ NAV ============ */
+nav{position:fixed;top:0;left:0;right:0;padding:1.6rem 3rem;display:flex;justify-content:space-between;align-items:center;z-index:120;}
+nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,10,.85) 0%,transparent 100%);z-index:-1;}
+.nav-logo{font-family:var(--serif);font-size:1.1rem;letter-spacing:.08em;color:var(--cream);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-chapter{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gray);opacity:0;transition:opacity .4s var(--ease-out);}
+.nav-chapter.show{opacity:1;}
+@media(max-width:900px){.nav-chapter{display:none;}}
+.lang-switch{display:flex;gap:.5rem;align-items:center;}
+.lang-btn{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gray);font-family:var(--sans);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;padding:.3rem .65rem;transition:all .3s var(--ease-out);}
+.lang-btn:hover,.lang-btn.active{color:var(--black);background:var(--gold);border-color:var(--gold);}
 
-  /* ABOUT */
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
-  .about-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1.05;font-weight:400;}
-  .about-title strong{font-weight:900;display:block;}
-  .about-text{font-size:1rem;line-height:2;color:var(--gray);margin-bottom:1.5rem;}
-  .skills-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2rem;}
-  .skill-tag{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:.4rem .9rem;}
-  .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;padding-top:2rem;border-top:1px solid var(--border);}
-  .stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--gold);}
-  .stat-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:.3rem;}
+/* ============ SHARED CHAPTER SCAFFOLD ============ */
+.chapter{position:relative;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:8rem 3rem;}
+.chapter-bg{position:absolute;inset:0;z-index:0;}
+.chapter-bg video,.chapter-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.42) saturate(1.3);will-change:transform;}
+.chapter-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,10,.75) 0%,rgba(8,8,10,.3) 35%,rgba(8,8,10,.55) 100%);}
+.chapter-inner{position:relative;z-index:1;width:100%;max-width:1360px;margin:0 auto;}
 
-  /* WORKS */
-  .works-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;}
-  .works-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:900;}
-  .filter-tabs{display:flex;gap:1.5rem;flex-wrap:wrap;}
-  .filter-tab{background:none;border:none;color:var(--gray);font-family:'Barlow',sans-serif;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;padding:.5rem 0;border-bottom:1px solid transparent;transition:all .3s;}
-  .filter-tab:hover,.filter-tab.active{color:var(--cream);border-color:var(--gold);}
+.chapter-num{position:absolute;top:-3.2rem;left:-.4rem;font-family:var(--serif);font-size:clamp(6rem,13vw,10.5rem);font-weight:900;color:transparent;-webkit-text-stroke:1px var(--gold-soft);line-height:1;pointer-events:none;user-select:none;z-index:-1;}
+.chapter-head{position:relative;margin-bottom:4rem;}
+.chapter-eyebrow{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem;}
+.chapter-eyebrow::before{content:'';width:34px;height:1px;background:var(--gold);}
+.chapter-name{font-family:var(--serif);font-size:clamp(2.6rem,6.5vw,5.2rem);font-weight:900;line-height:1.02;letter-spacing:-.01em;}
+.chapter-name em{font-style:italic;font-weight:400;color:var(--gold-bright);}
+.chapter-role{margin-top:1.1rem;font-size:.92rem;color:rgba(242,236,224,.68);letter-spacing:.02em;max-width:560px;}
 
-  /* CATEGORY GROUPS */
-  .category-group{position:relative;margin-bottom:0;padding:5rem 0;}
-  .category-group+.category-group{border-top:1px solid var(--border);}
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){
+  .reveal{transition:opacity .4s ease;transform:none!important;}
+  html{scroll-behavior:auto;}
+  .chapter-bg video,.chapter-bg img{transform:none!important;}
+}
 
-  /* VIDEO BG */
-  .cat-video-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
-  .cat-video-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease;filter:blur(1px) brightness(0.5) saturate(1.5);}
-  .cat-video-bg.active video{opacity:1;}
-  .category-group>*:not(.cat-video-bg){position:relative;z-index:1;}
-  .cat-video-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.55) 0%,rgba(8,8,8,.2) 30%,rgba(8,8,8,.2) 70%,rgba(8,8,8,.55) 100%);}
+/* ============ HERO ============ */
+.hero{padding-bottom:6rem;justify-content:flex-end;}
+.hero-content{position:relative;z-index:1;}
+.hero-tag{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem;opacity:0;animation:fadeUp 1s .3s forwards;display:flex;align-items:center;gap:1rem;}
+.hero-tag::before{content:'';display:block;width:40px;height:1px;background:var(--gold);}
+.hero-title{font-family:var(--serif);font-size:clamp(3.6rem,11.5vw,10rem);font-weight:900;line-height:.87;letter-spacing:-.02em;opacity:0;animation:fadeUp 1s .5s forwards;}
+.hero-title em{font-style:italic;font-weight:400;color:var(--gold-bright);}
+.hero-sub{max-width:480px;margin-top:2.2rem;font-size:1rem;line-height:1.85;color:rgba(242,236,224,.72);opacity:0;animation:fadeUp 1s .7s forwards;}
+.hero-scroll{position:absolute;bottom:2.4rem;right:3rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gray);opacity:0;animation:fadeUp 1s 1.3s forwards;z-index:1;}
+.hero-scroll-line{width:1px;height:52px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2.2s 2s infinite;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%,100%{opacity:.35}50%{opacity:1}}
 
-  /* CATEGORY TITLE */
-  .category-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;letter-spacing:.04em;color:var(--cream);margin-bottom:2.5rem;display:flex;align-items:center;gap:1.2rem;}
-  .category-title span.cat-sub{font-family:'Barlow',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:300;}
-  .category-title::after{content:'';flex:1;height:1px;background:var(--border);}
+/* ============ MANIFESTO / ABOUT ============ */
+.manifesto{background:var(--charcoal-2);}
+.manifesto-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:5rem;align-items:start;}
+.manifesto-title{font-family:var(--serif);font-size:clamp(2.4rem,4.6vw,3.9rem);line-height:1.08;font-weight:400;}
+.manifesto-title strong{font-weight:900;display:block;color:var(--cream);}
+.manifesto-text{font-size:1rem;line-height:1.95;color:var(--gray);margin-bottom:1.4rem;max-width:52ch;}
+.skills-row{display:flex;flex-wrap:wrap;gap:.55rem;margin:1.8rem 0 2.6rem;}
+.skill-tag{font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:.4rem .85rem;}
+.credits-row{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);padding-top:1.8rem;}
+.credits-row>div{border-left:1px solid var(--border);padding-left:1.4rem;}
+.credits-row>div:first-child{border-left:none;padding-left:0;}
+.stat-num{font-family:var(--serif);font-size:2.6rem;font-weight:900;color:var(--gold-bright);font-variant-numeric:tabular-nums;}
+.stat-label{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:.35rem;}
 
-  /* VIDEO GRID */
-  .video-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.4rem;}
-  .video-card{position:relative;overflow:hidden;background:var(--light-gray);cursor:none;}
-  .video-card.large{grid-column:span 8;}
-  .video-card.medium{grid-column:span 6;}
-  .video-card.small{grid-column:span 4;}
-  .video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94),filter .4s;filter:grayscale(15%);}
-  .video-thumb.vertical{aspect-ratio:9/16;max-height:300px;}
-  .video-thumb.img{width: 100%;height: 100%;object-fit: cover;display: block;}
-  .video-card:hover .video-thumb{transform:scale(1.06);filter:grayscale(0%);}
-  .video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.95) 0%,rgba(8,8,8,.1) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;opacity:0;transition:opacity .4s;}
-  .video-card:hover .video-overlay{opacity:1;}
-  .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);width:56px;height:56px;border:1px solid rgba(201,168,76,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .4s;opacity:0;}
-  .play-btn svg{fill:var(--gold);width:17px;margin-left:3px;}
-  .video-card:hover .play-btn{opacity:1;transform:translate(-50%,-50%) scale(1);}
-  .video-platform{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
-  .video-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.3rem;line-height:1.3;}
-  .video-desc{font-size:.72rem;color:var(--gray);letter-spacing:.04em;}
+/* ============ VIDEO GRID (reused across chapters) ============ */
+.video-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.3rem;}
+.video-card{position:relative;overflow:hidden;background:var(--charcoal);cursor:none;}
+.video-card.large{grid-column:span 8;}
+.video-card.medium{grid-column:span 6;}
+.video-card.small{grid-column:span 4;}
+.video-card:nth-child(even){transform:translateY(-.6rem);}
+.video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .7s var(--ease-out),filter .5s var(--ease-out);filter:grayscale(18%) brightness(.94);}
+.video-thumb.vertical{aspect-ratio:9/16;max-height:300px;}
+.video-card:hover .video-thumb{transform:scale(1.055);filter:grayscale(0%) brightness(1);}
+.video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,10,.95) 0%,rgba(8,8,10,.15) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;opacity:0;transition:opacity .45s var(--ease-out);}
+.video-card:hover .video-overlay{opacity:1;}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);width:52px;height:52px;border:1px solid rgba(201,168,76,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .4s var(--ease-out);opacity:0;}
+.play-btn svg{fill:var(--gold);width:16px;margin-left:3px;}
+.video-card:hover .play-btn{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.video-card:active .play-btn{transform:translate(-50%,-50%) scale(.92);}
+.video-platform{font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;}
+.video-title{font-family:var(--serif);font-size:.98rem;font-weight:700;margin-bottom:.25rem;line-height:1.3;}
+.video-desc{font-size:.7rem;color:var(--gray);letter-spacing:.04em;}
 
-  /* MODAL */
-  .modal{position:fixed;inset:0;background:rgba(8,8,8,.96);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(12px);}
-  .modal.open{opacity:1;pointer-events:all;}
-  .modal-inner{width:min(900px,92vw);position:relative;}
-  .modal-embed{width:100%;aspect-ratio:16/9;border:none;}
-  .modal-close{position:absolute;top:-3rem;right:0;background:none;border:none;color:var(--gray);font-family:'Barlow',sans-serif;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;cursor:none;transition:color .3s;display:flex;align-items:center;gap:.6rem;}
-  .modal-close:hover{color:var(--cream);}
-  .modal-close::before{content:'×';font-size:1.5rem;font-weight:300;line-height:1;}
+/* ============ MODAL ============ */
+.modal{position:fixed;inset:0;background:rgba(8,8,10,.96);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s var(--ease-out);backdrop-filter:blur(14px);}
+.modal.open{opacity:1;pointer-events:all;}
+.modal-inner{width:min(900px,92vw);position:relative;}
+.modal-embed{width:100%;aspect-ratio:16/9;border:none;}
+.modal-close{position:absolute;top:-3rem;right:0;background:none;border:none;color:var(--gray);font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;cursor:none;transition:color .3s;display:flex;align-items:center;gap:.6rem;}
+.modal-close:hover{color:var(--cream);}
+.modal-close::before{content:'×';font-size:1.5rem;font-weight:300;line-height:1;}
 
-  /* FOOTER */
-  footer{padding:5rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;}
-  .footer-name{font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:.1em;}
-  .footer-links{display:flex;gap:2rem;}
-  .footer-links a{color:var(--gray);text-decoration:none;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:color .3s;}
-  .footer-links a:hover{color:var(--gold);}
-  .footer-copy{font-size:.65rem;color:#444;letter-spacing:.1em;}
+/* ============ CONTACT / OUTRO ============ */
+.contact{background:var(--black);text-align:left;justify-content:center;}
+.contact-eyebrow{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;display:flex;align-items:center;gap:1rem;}
+.contact-eyebrow::before{content:'';width:34px;height:1px;background:var(--gold);}
+.contact-title{font-family:var(--serif);font-size:clamp(2.8rem,8vw,6.4rem);font-weight:900;line-height:.98;letter-spacing:-.01em;max-width:900px;}
+.contact-title em{font-style:italic;font-weight:400;color:var(--gold-bright);}
+.contact-links{display:flex;gap:1rem;margin-top:3rem;flex-wrap:wrap;}
+.contact-link{display:inline-flex;align-items:center;gap:.7rem;border:1px solid rgba(201,168,76,.35);color:var(--cream);text-decoration:none;padding:.9rem 1.6rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;transition:all .35s var(--ease-out);cursor:none;}
+.contact-link:hover{background:var(--gold);color:var(--black);border-color:var(--gold);}
+.contact-link svg{width:14px;height:14px;transition:transform .35s var(--ease-out);}
+.contact-link:hover svg{transform:translate(2px,-2px);}
+footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-name{font-family:var(--serif);font-size:1rem;letter-spacing:.08em;}
+.footer-copy{font-size:.65rem;color:#4a4944;letter-spacing:.1em;}
 
-  /* REVEAL */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94);}
-  .reveal.visible{opacity:1;transform:translateY(0);}
-
-  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
-
-  @media(max-width:900px){
-    nav{padding:1.4rem 1.5rem}
-    .nav-links{display:none}
-    .hero{padding:0 1.5rem 5rem}
-    section{padding:6rem 1.5rem}
-    .about-grid{grid-template-columns:1fr;gap:3rem}
-    .video-card{grid-column:span 12!important}
-    .works-header{flex-direction:column;align-items:flex-start;gap:1.5rem}
-    footer{flex-direction:column;align-items:flex-start;gap:1.5rem}
-    .category-group{padding:3.5rem 0;}
-  }
-
-  /* LANG SWITCHER */
-  .lang-switch{display:flex;gap:.6rem;align-items:center;}
-  .lang-btn{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gray);font-family:'Barlow',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;padding:.3rem .7rem;transition:all .3s;}
-  .lang-btn:hover,.lang-btn.active{color:var(--gold);border-color:var(--gold);}
-  [data-lang]{transition:opacity .2s;}
-  .lang-en [data-lang="es"]{display:none;}
-  .lang-es [data-lang="en"]{display:none;}
+/* ============ RESPONSIVE ============ */
+@media(max-width:900px){
+  nav{padding:1.3rem 1.4rem;}
+  .chapter{padding:6rem 1.4rem;}
+  .manifesto-grid{grid-template-columns:1fr;gap:2.6rem;}
+  .credits-row{grid-template-columns:repeat(3,1fr);}
+  .video-card{grid-column:span 12!important;transform:none!important;}
+  .chapter-num{font-size:clamp(4.2rem,22vw,6rem);top:-2.2rem;}
+  footer.site-footer{flex-direction:column;align-items:flex-start;}
+}
+[data-lang]{transition:opacity .2s;}
+.lang-en [data-lang="es"]{display:none;}
+.lang-es [data-lang="en"]{display:none;}
 </style>
 </head>
 <body>
 
+<div class="grain"></div>
 <div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-ring" id="cursorRing"><span id="cursorLabel"></span></div>
+<div class="mobile-progress" id="mobileProgress"></div>
+
+<!-- TIMELINE RAIL — signature: a video editor's timeline, repurposed as site navigation -->
+<aside class="timeline-rail" aria-hidden="true">
+  <div class="timeline-track"><div class="timeline-fill" id="timelineFill"></div>
+    <ul class="timeline-ticks" id="timelineTicks"></ul>
+  </div>
+</aside>
 
 <nav>
-  <a class="nav-logo" href="#">Ástor Entenza</a>
-  <div class="lang-switch">
-    <button class="lang-btn active" onclick="setLang('es')">ES</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  <a class="nav-logo" href="#hero">Ástor Entenza</a>
+  <div class="nav-right">
+    <span class="nav-chapter" id="navChapter"></span>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
   </div>
-  <ul class="nav-links">
-    <li><a href="#works"><span data-lang="es">Trabajos</span><span data-lang="en">Works</span></a></li>
-    <li><a href="#about"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></a></li>
-  </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-video-bg">
+<main>
+
+<!-- 00 — HERO -->
+<section class="chapter hero" id="hero" data-label="Ástor Entenza">
+  <div class="chapter-bg">
     <video src="img/bg_hero_web.mp4" autoplay muted loop playsinline></video>
   </div>
-  <div class="hero-bg"></div>
-  <div class="hero-lines"></div>
   <div class="hero-content">
     <div class="hero-tag">Video Producer · Editor · Community Manager</div>
     <h1 class="hero-title"><span data-lang="es">Imagen<br>que <em>conecta.</em></span><span data-lang="en">Visuals<br>that <em>connect.</em></span></h1>
     <p class="hero-sub"><span data-lang="es">Ingeniero multimedia especializado en producción y edición de vídeo. Creo contenido audiovisual que potencia marcas, artistas y proyectos — dinámico, emocional y con resultados reales.</span><span data-lang="en">Multimedia engineer specialised in video production and editing. I create audiovisual content that elevates brands, artists and projects — dynamic, emotional and results-driven.</span></p>
   </div>
-  <div class="hero-scroll"><div class="hero-scroll-line"></div><span>Scroll</span></div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div><span data-lang="es">Scroll</span><span data-lang="en">Scroll</span></div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></div>
-  <div class="about-grid">
-    <div><h2 class="about-title reveal"><span data-lang="es">Cada vídeo<br><strong>es una decisión.</strong></span><span data-lang="en">Every frame<br><strong>is a choice.</strong></span></h2></div>
-    <div class="reveal">
-      <p class="about-text"><span data-lang="es">Soy Ástor Entenza, ingeniero multimedia especializado en la creación de conmtenido audiovisual. Me apasiona contar historias visuales que conecten con las personas y potencien la imagen de marcas, empresas y proyectos creativos.</span><span data-lang="en">I'm Ástor Entenza, a multimedia engineer specialising in the creation of audiovisual content. I'm passionate about visual storytelling that connects with people and elevates the image of brands, companies and creative projects.</span></p>
-      <p class="about-text"><span data-lang="es">Gestiono todas las fases del proceso creativo: planificación, grabación, edición, animación y publicación. He trabajado con academias, productoras audiovisuales, marcas de moda y artistas internacionales.</span><span data-lang="en">I manage every stage of the creative process: planning, filming, editing, animation and publishing. I've worked with academies, production companies, fashion brands and international artists.</span></p>
-      <div class="skills-row">
-        <span class="skill-tag">Video Editor</span>
-        <span class="skill-tag">Motion Graphics</span>
-        <span class="skill-tag">After Effects</span>
-        <span class="skill-tag">Live Streaming</span>
-        <span class="skill-tag">Reels & TikTok</span>
-        <span class="skill-tag">Community Manager</span>
-      </div>
-      <div class="about-stats">
-        <div><div class="stat-num">4+</div><div class="stat-label"><span data-lang="es">Años</span><span data-lang="en">Years</span></div></div>
-        <div><div class="stat-num">6</div><div class="stat-label"><span data-lang="es">Clientes</span><span data-lang="en">Clients</span></div></div>
-        <div><div class="stat-num">∞</div><div class="stat-label"><span data-lang="es">Ideas</span><span data-lang="en">Ideas</span></div></div>
+<!-- 01 — MANIFESTO / ABOUT -->
+<section class="chapter manifesto" id="about" data-label="Sobre mí">
+  <div class="chapter-inner">
+    <div class="manifesto-grid">
+      <div><h2 class="manifesto-title reveal"><span data-lang="es">Cada vídeo<br><strong>es una decisión.</strong></span><span data-lang="en">Every frame<br><strong>is a choice.</strong></span></h2></div>
+      <div class="reveal">
+        <p class="manifesto-text"><span data-lang="es">Soy Ástor Entenza, ingeniero multimedia especializado en la creación de contenido audiovisual. Me apasiona contar historias visuales que conecten con las personas y potencien la imagen de marcas, empresas y proyectos creativos.</span><span data-lang="en">I'm Ástor Entenza, a multimedia engineer specialising in the creation of audiovisual content. I'm passionate about visual storytelling that connects with people and elevates the image of brands, companies and creative projects.</span></p>
+        <p class="manifesto-text"><span data-lang="es">Gestiono todas las fases del proceso creativo: planificación, grabación, edición, animación y publicación. He trabajado con academias, productoras audiovisuales, marcas de moda y artistas internacionales.</span><span data-lang="en">I manage every stage of the creative process: planning, filming, editing, animation and publishing. I've worked with academies, production companies, fashion brands and international artists.</span></p>
+        <div class="skills-row">
+          <span class="skill-tag">Video Editor</span>
+          <span class="skill-tag">Motion Graphics</span>
+          <span class="skill-tag">After Effects</span>
+          <span class="skill-tag">Live Streaming</span>
+          <span class="skill-tag">Reels & TikTok</span>
+          <span class="skill-tag">Community Manager</span>
+        </div>
+        <div class="credits-row">
+          <div><div class="stat-num">4+</div><div class="stat-label"><span data-lang="es">Años</span><span data-lang="en">Years</span></div></div>
+          <div><div class="stat-num">6</div><div class="stat-label"><span data-lang="es">Clientes</span><span data-lang="en">Clients</span></div></div>
+          <div><div class="stat-num">∞</div><div class="stat-label"><span data-lang="es">Ideas</span><span data-lang="en">Ideas</span></div></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WORKS -->
-<section id="works">
-  <div class="works-header reveal">
-    <h2 class="works-title"><span data-lang="es">Trabajos</span><span data-lang="en">Works</span></h2>
-    <div class="filter-tabs">
-      <button class="filter-tab active" data-filter="all"><span data-lang="es">Todos</span><span data-lang="en">All</span></button>
-      <button class="filter-tab" data-filter="depol">DEPOL</button>
-      <button class="filter-tab" data-filter="dj">Macarena Hoffmann</button>
-      <button class="filter-tab" data-filter="manyer">Manyer</button>
-      <button class="filter-tab" data-filter="relifiction">Relifiction</button>
-      <button class="filter-tab" data-filter="ala">Am. Language</button>
+<!-- 02 — DEPOL -->
+<section class="chapter" id="depol" data-label="DEPOL Formación">
+  <div class="chapter-bg"><video src="img/bg_depol_web.mp4" muted loop playsinline preload="none"></video></div>
+  <div class="chapter-inner">
+    <div class="chapter-head reveal">
+      <span class="chapter-num">02</span>
+      <div class="chapter-eyebrow">Video Producer & Editor</div>
+      <h2 class="chapter-name">DEPOL <em>Formación</em></h2>
+      <p class="chapter-role"><span data-lang="es">Academia de Oposiciones a Policía · 2025–actualidad</span><span data-lang="en">Police Recruitment Academy · 2025–present</span></p>
     </div>
-  </div>
-
-  <!-- DEPOL -->
-  <div class="category-group" data-group="depol">
-    <div class="cat-video-bg" id="bg-depol"><video src="img/bg_depol_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">DEPOL Formación <span class="cat-sub"><span data-lang="es">Video Producer & Editor · Academia de Oposiciones a Policía · 2025–actualidad</span><span data-lang="en">Video Producer & Editor · Police Recruitment Academy · 2025–present</span></span></div>
     <div class="video-grid">
       <div class="video-card large reveal" data-url="https://www.instagram.com/reel/DXrawIrqvEc/">
-        <img class="video-thumb vertical" src="img/depol1.jpg" alt="Simulacro Real 2026">
+        <img class="video-thumb vertical" src="img/depol1.jpg" alt="Simulacro real de examen DEPOL 2026">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">Simulacro Real 2026</div>
-          <div class="video-desc">Event · 2025</div>
-        </div>
+        <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">Simulacro Real 2026</div><div class="video-desc">Event · 2025</div></div>
       </div>
       <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DPL-D9_issn/">
-        <img class="video-thumb vertical" src="img/depol2.jpg" alt="Sorteo Casco UIP">
+        <img class="video-thumb vertical" src="img/depol2.jpg" alt="Sorteo de casco UIP DEPOL">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">Sorteo Casco UIP</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
+        <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">Sorteo Casco UIP</div><div class="video-desc">Reel · 2025</div></div>
       </div>
       <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DXOl3V3KMLD/">
-        <img class="video-thumb vertical" src="img/depol3.jpg" alt="7 Eximentes">
+        <img class="video-thumb vertical" src="img/depol3.jpg" alt="Explicación de los 7 eximentes, artículo 20">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">7 Eximentes Art. 20</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
+        <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">7 Eximentes Art. 20</div><div class="video-desc">Reel · 2025</div></div>
       </div>
       <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DW1amUOKSVi/">
-        <img class="video-thumb vertical" src="img/depol4.jpg" alt="Sorteo Esquema DGP">
+        <img class="video-thumb vertical" src="img/depol4.jpg" alt="Sorteo del esquema DGP">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">DGP Scheme Prize Draw</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
+        <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title"><span data-lang="es">Sorteo Esquema DGP</span><span data-lang="en">DGP Scheme Prize Draw</span></div><div class="video-desc">Reel · 2025</div></div>
       </div>
       <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DTsZzXvih93/">
-        <img class="video-thumb vertical" src="img/depol5.jpg" alt="Artes marciales">
+        <img class="video-thumb vertical" src="img/depol5.jpg" alt="Vídeo de introducción sobre artes marciales">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · DEPOL</div>
-          <div class="video-title">Introduction</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MACARENA HOFFMANN -->
-  <div class="category-group" data-group="dj">
-    <div class="cat-video-bg" id="bg-dj"><video src="img/bg_macarena_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">Macarena Hoffmann <span class="cat-sub"><span data-lang="es">Video Editor and Graphic Designer · DJ Internacional · 2024–actualidad</span><span data-lang="en">Video Editor and Graphic Designer · International DJ · 2024–present</span></span></div>
-    <div class="video-grid">
-      <div class="video-card medium reveal" data-url="https://www.instagram.com/p/DYchQAZjPqw/">
-        <img class="video-thumb" src="img/dj_upcoming.jpg" alt="Upcoming Dates">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Macarena Hoffmann</div>
-          <div class="video-title">Upcoming Dates 2026</div>
-          <div class="video-desc">Design · 2025</div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DYAKHtqMItu/">
-        <img class="video-thumb" src="img/dj_twinflames.jpg" alt="Twin Flames">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Macarena Hoffmann</div>
-          <div class="video-title">Twin Flames</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://www.instagram.com/p/DZ-BcGeDA0M/">
-        <img class="video-thumb" src="img/dj_datesjj.jpg" alt="June July Dates">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Macarena Hoffmann</div>
-          <div class="video-title"><span data-lang="es">June / July Dates 2025</span><span data-lang="en">June / July Dates 2025</span></div>
-          <div class="video-desc"><span data-lang="es">Design · 2025</span><span data-lang="en">Design · 2025</span></div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://www.youtube.com/watch?v=UHGER9rD-g8">
-        <img class="video-thumb" src="https://img.youtube.com/vi/UHGER9rD-g8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/UHGER9rD-g8/hqdefault.jpg'" alt="Macarena YouTube">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">YouTube · Macarena Hoffmann</div>
-          <div class="video-title"><span data-lang="es">Contenido Visual</span><span data-lang="en">Visual Content</span></div>
-          <div class="video-desc"><span data-lang="es">Producción · 2025</span><span data-lang="en">Production · 2025</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MANYER -->
-  <div class="category-group" data-group="manyer">
-    <div class="cat-video-bg" id="bg-manyer"><video src="img/bg_manyer_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">Manyer <span class="cat-sub"><span data-lang="es">Community Manager  · Marca de Joyería · 2025</span><span data-lang="en">Community Manager · Jewellery Brand · 2025</span></span></div>
-    <div class="video-grid">
-      <div class="video-card large reveal" data-url="https://www.instagram.com/reel/DG-2kasIDyb/">
-        <img class="video-thumb vertical" src="img/manyer1.jpg" alt="Manyer shirt">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Street Photoshoot</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
-      </div>
-      <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DGfw1Afo_po/">
-        <img class="video-thumb vertical" src="img/manyer2.jpg" alt="Good Mood">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Good Look, Good Mood</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
-      </div>
-      <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DGOBamoodl6/">
-        <img class="video-thumb vertical" src="img/manyer3.jpg" alt="Don't fit the mold">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Wine Video Session</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DGqNRRvo-ix/">
-        <img class="video-thumb vertical" src="img/manyer4.jpg" alt="Manyer books">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Visual Identity</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DF7urgpouJw/">
-        <img class="video-thumb vertical" src="img/manyer5.jpg" alt="Manyer wine">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Manyer</div>
-          <div class="video-title">Photoshoot</div>
-          <div class="video-desc">Reel · 2025</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RELIFICTION -->
-  <div class="category-group" data-group="relifiction">
-    <div class="cat-video-bg" id="bg-relifiction"><video src="img/bg_relifiction_web.mp4" muted loop playsinline preload="none"></video></div>
-    <div class="category-title reveal">Relifiction <span class="cat-sub"><span data-lang="es">Video Editor · Productora Audiovisual · 2024–2025</span><span data-lang="en">Video Editor · Audiovisual Production · 2024–2025</span></span></div>
-    <div class="video-grid">
-      <div class="video-card medium reveal" data-url="https://youtu.be/16pl2lXXzn8">
-        <img class="video-thumb" src="https://img.youtube.com/vi/16pl2lXXzn8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/16pl2lXXzn8/hqdefault.jpg'" alt="Relifiction YT 1">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">YouTube · Relifiction</div>
-          <div class="video-title">Opening Event</div>
-          <div class="video-desc">Hotel Film Clip · 2024</div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://youtu.be/OMM6r1ZygiA">
-        <img class="video-thumb" src="https://img.youtube.com/vi/OMM6r1ZygiA/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/OMM6r1ZygiA/hqdefault.jpg'" alt="Relifiction YT 2">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">YouTube · Relifiction</div>
-          <div class="video-title">Hotel Presentation</div>
-          <div class="video-desc">Hotel Film Clip · 2024</div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DCg24euAtap/">
-        <img class="video-thumb" src="img/rel1.jpg" alt="Boxing">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Relifiction</div>
-          <div class="video-title">Boxing Content</div>
-          <div class="video-desc">Reel · 2024</div>
-        </div>
-      </div>
-      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DA6XRd9AIve/">
-        <img class="video-thumb" src="img/rel2.jpg" alt="Karamur">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Relifiction</div>
-          <div class="video-title">Self-Defence Content</div>
-          <div class="video-desc">Reel · 2024</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AMERICAN LANGUAGE ACADEMY -->
-  <div class="category-group" data-group="ala">
-    <div class="category-title reveal">American Language Academy <span class="cat-sub"><span data-lang="es">Social Media Manager · Academia de Inglés · 2024</span><span data-lang="en">Social Media Manager · English Academy · 2024</span></span></div>
-    <div class="video-grid">
-      <div class="video-card large reveal" data-url="https://youtu.be/brb3XKsrp18">
-        <img class="video-thumb vertical" src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/brb3XKsrp18/hqdefault.jpg'" alt="ALA YouTube">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">YouTube · Am. Language</div>
-          <div class="video-title">Clip Edit</div>
-          <div class="video-desc">Reel · 2024</div>
-        </div>
-      </div>
-      <div class="video-card small reveal" data-url="https://www.instagram.com/reel/C-ArROuiH9y/">
-        <img class="video-thumb img" src="img/alagasol.jpg" alt="Pau Gasol" style="object-position:center 20%">
-        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
-        <div class="video-overlay">
-          <div class="video-platform">Instagram · Am. Language</div>
-          <div class="video-title">Pau Gasol — Subtitles</div>
-          <div class="video-desc">Reel · 2024</div>
-        </div>
+        <div class="video-overlay"><div class="video-platform">Instagram · DEPOL</div><div class="video-title">Introduction</div><div class="video-desc">Reel · 2025</div></div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- 03 — MACARENA HOFFMANN -->
+<section class="chapter" id="macarena" data-label="Macarena Hoffmann">
+  <div class="chapter-bg"><video src="img/bg_macarena_web.mp4" muted loop playsinline preload="none"></video></div>
+  <div class="chapter-inner">
+    <div class="chapter-head reveal">
+      <span class="chapter-num">03</span>
+      <div class="chapter-eyebrow">Video Editor & Graphic Designer</div>
+      <h2 class="chapter-name">Macarena <em>Hoffmann</em></h2>
+      <p class="chapter-role"><span data-lang="es">DJ Internacional · 2024–actualidad</span><span data-lang="en">International DJ · 2024–present</span></p>
+    </div>
+    <div class="video-grid">
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/p/DYchQAZjPqw/">
+        <img class="video-thumb" src="img/dj_upcoming.jpg" alt="Diseño de próximas fechas de DJ set 2026">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Macarena Hoffmann</div><div class="video-title">Upcoming Dates 2026</div><div class="video-desc">Design · 2025</div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DYAKHtqMItu/">
+        <img class="video-thumb" src="img/dj_twinflames.jpg" alt="Vídeo Twin Flames">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Macarena Hoffmann</div><div class="video-title">Twin Flames</div><div class="video-desc">Reel · 2025</div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/p/DZ-BcGeDA0M/">
+        <img class="video-thumb" src="img/dj_datesjj.jpg" alt="Diseño de fechas junio y julio 2025">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Macarena Hoffmann</div><div class="video-title"><span data-lang="es">June / July Dates 2025</span><span data-lang="en">June / July Dates 2025</span></div><div class="video-desc"><span data-lang="es">Design · 2025</span><span data-lang="en">Design · 2025</span></div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.youtube.com/watch?v=UHGER9rD-g8">
+        <img class="video-thumb" src="https://img.youtube.com/vi/UHGER9rD-g8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/UHGER9rD-g8/hqdefault.jpg'" alt="Producción de contenido visual para Macarena Hoffmann">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">YouTube · Macarena Hoffmann</div><div class="video-title"><span data-lang="es">Contenido Visual</span><span data-lang="en">Visual Content</span></div><div class="video-desc"><span data-lang="es">Producción · 2025</span><span data-lang="en">Production · 2025</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 — MANYER -->
+<section class="chapter" id="manyer" data-label="Manyer">
+  <div class="chapter-bg"><video src="img/bg_manyer_web.mp4" muted loop playsinline preload="none"></video></div>
+  <div class="chapter-inner">
+    <div class="chapter-head reveal">
+      <span class="chapter-num">04</span>
+      <div class="chapter-eyebrow">Community Manager</div>
+      <h2 class="chapter-name">Manyer</h2>
+      <p class="chapter-role"><span data-lang="es">Marca de Joyería · 2025</span><span data-lang="en">Jewellery Brand · 2025</span></p>
+    </div>
+    <div class="video-grid">
+      <div class="video-card large reveal" data-url="https://www.instagram.com/reel/DG-2kasIDyb/">
+        <img class="video-thumb vertical" src="img/manyer1.jpg" alt="Sesión fotográfica de calle para Manyer">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Street Photoshoot</div><div class="video-desc">Reel · 2025</div></div>
+      </div>
+      <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DGfw1Afo_po/">
+        <img class="video-thumb vertical" src="img/manyer2.jpg" alt="Reel Good Look Good Mood">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Good Look, Good Mood</div><div class="video-desc">Reel · 2025</div></div>
+      </div>
+      <div class="video-card small reveal" data-url="https://www.instagram.com/reel/DGOBamoodl6/">
+        <img class="video-thumb vertical" src="img/manyer3.jpg" alt="Sesión de vídeo con vino para Manyer">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Wine Video Session</div><div class="video-desc">Reel · 2025</div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DGqNRRvo-ix/">
+        <img class="video-thumb vertical" src="img/manyer4.jpg" alt="Identidad visual de Manyer con libros">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Visual Identity</div><div class="video-desc">Reel · 2025</div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DF7urgpouJw/">
+        <img class="video-thumb vertical" src="img/manyer5.jpg" alt="Sesión fotográfica de vino Manyer">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Manyer</div><div class="video-title">Photoshoot</div><div class="video-desc">Reel · 2025</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 — RELIFICTION -->
+<section class="chapter" id="relifiction" data-label="Relifiction">
+  <div class="chapter-bg"><video src="img/bg_relifiction_web.mp4" muted loop playsinline preload="none"></video></div>
+  <div class="chapter-inner">
+    <div class="chapter-head reveal">
+      <span class="chapter-num">05</span>
+      <div class="chapter-eyebrow">Video Editor</div>
+      <h2 class="chapter-name">Relifiction</h2>
+      <p class="chapter-role"><span data-lang="es">Productora Audiovisual · 2024–2025</span><span data-lang="en">Audiovisual Production · 2024–2025</span></p>
+    </div>
+    <div class="video-grid">
+      <div class="video-card medium reveal" data-url="https://youtu.be/16pl2lXXzn8">
+        <img class="video-thumb" src="https://img.youtube.com/vi/16pl2lXXzn8/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/16pl2lXXzn8/hqdefault.jpg'" alt="Vídeo de evento de apertura de hotel">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">YouTube · Relifiction</div><div class="video-title">Opening Event</div><div class="video-desc">Hotel Film Clip · 2024</div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://youtu.be/OMM6r1ZygiA">
+        <img class="video-thumb" src="https://img.youtube.com/vi/OMM6r1ZygiA/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/OMM6r1ZygiA/hqdefault.jpg'" alt="Vídeo de presentación de hotel">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">YouTube · Relifiction</div><div class="video-title">Hotel Presentation</div><div class="video-desc">Hotel Film Clip · 2024</div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DCg24euAtap/">
+        <img class="video-thumb" src="img/rel1.jpg" alt="Contenido de boxeo para Relifiction">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Relifiction</div><div class="video-title">Boxing Content</div><div class="video-desc">Reel · 2024</div></div>
+      </div>
+      <div class="video-card medium reveal" data-url="https://www.instagram.com/reel/DA6XRd9AIve/">
+        <img class="video-thumb" src="img/rel2.jpg" alt="Contenido de defensa personal para Relifiction">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Relifiction</div><div class="video-title">Self-Defence Content</div><div class="video-desc">Reel · 2024</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 — AMERICAN LANGUAGE ACADEMY (sin vídeo propio: fondo estático a partir de asset real) -->
+<section class="chapter" id="ala" data-label="American Language Academy">
+  <div class="chapter-bg"><img src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" alt="" aria-hidden="true"></div>
+  <div class="chapter-inner">
+    <div class="chapter-head reveal">
+      <span class="chapter-num">06</span>
+      <div class="chapter-eyebrow">Social Media Manager</div>
+      <h2 class="chapter-name">American <em>Language Academy</em></h2>
+      <p class="chapter-role"><span data-lang="es">Academia de Inglés · 2024</span><span data-lang="en">English Academy · 2024</span></p>
+    </div>
+    <div class="video-grid">
+      <div class="video-card large reveal" data-url="https://youtu.be/brb3XKsrp18">
+        <img class="video-thumb vertical" src="https://img.youtube.com/vi/brb3XKsrp18/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/brb3XKsrp18/hqdefault.jpg'" alt="Edición de clip para American Language Academy">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">YouTube · Am. Language</div><div class="video-title">Clip Edit</div><div class="video-desc">Reel · 2024</div></div>
+      </div>
+      <div class="video-card small reveal" data-url="https://www.instagram.com/reel/C-ArROuiH9y/">
+        <img class="video-thumb img" src="img/alagasol.jpg" alt="Vídeo con subtítulos de Pau Gasol" style="width:100%;height:100%;object-fit:cover;object-position:center 20%">
+        <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg></div>
+        <div class="video-overlay"><div class="video-platform">Instagram · Am. Language</div><div class="video-title">Pau Gasol — Subtitles</div><div class="video-desc">Reel · 2024</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 — CONTACT -->
+<section class="chapter contact" id="contact" data-label="Contacto">
+  <div class="chapter-inner">
+    <div class="contact-eyebrow reveal"><span data-lang="es">¿Hablamos?</span><span data-lang="en">Let's talk</span></div>
+    <h2 class="contact-title reveal"><span data-lang="es">Cuéntame tu proyecto<br>y le doy <em>imagen.</em></span><span data-lang="en">Tell me about your project<br>and I'll give it <em>a face.</em></span></h2>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="https://www.linkedin.com/in/%C3%A1stor-entenza-rodr%C3%ADguez-285b3921a" target="_blank" rel="noopener">LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      <a class="contact-link" href="https://www.instagram.com/astorentenza/" target="_blank" rel="noopener">Instagram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-name">Ástor Entenza Rodríguez</div>
+      <div class="footer-copy">© 2026 · Madrid</div>
+    </footer>
+  </div>
+</section>
+
+</main>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
@@ -443,64 +453,121 @@
   </div>
 </div>
 
-<footer>
-  <div>
-    <div class="footer-name">Ástor Entenza Rodríguez</div>
-    <div class="footer-copy" style="margin-top:.5rem">© 2025 · Madrid</div>
-  </div>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/%C3%A1stor-entenza-rodr%C3%ADguez-285b3921a" target="_blank">LinkedIn</a>
-    <a href="https://www.instagram.com/astorentenza/" target="_blank">Instagram</a>
-  </div>
-</footer>
-
 <script>
-  // Cursor
-  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Custom cursor ---- */
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing'),label=document.getElementById('cursorLabel');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-  (function a(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*.15;ry+=(my-ry)*.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
-  document.querySelectorAll('a,button,.video-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(2)';ring.style.transform='translate(-50%,-50%) scale(1.5)';ring.style.borderColor='rgba(201,168,76,.9)';});
-    el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(201,168,76,.5)';});
+  (function loop(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*.16;ry+=(my-ry)*.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(1.8)';ring.style.borderColor='rgba(201,168,76,.9)';});
+    el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(201,168,76,.45)';});
+  });
+  document.querySelectorAll('.video-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ring.classList.add('tagged');label.textContent=document.documentElement.classList.contains('lang-en')?'View':'Ver';});
+    el.addEventListener('mouseleave',()=>{ring.classList.remove('tagged');});
   });
 
-  // Video backgrounds on scroll
+  /* ---- Reveal on scroll ---- */
+  const revealObs=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);revealObs.unobserve(e.target);}});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+  /* ---- Chapter background video play/pause + subtle parallax ---- */
+  const chapters=[...document.querySelectorAll('.chapter')];
   const bgObs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
-      const bg=entry.target.querySelector('.cat-video-bg');
-      if(!bg)return;
-      const vid=bg.querySelector('video');
-      if(entry.isIntersecting){
-        if(vid.readyState===0)vid.load();
-        vid.play().catch(()=>{});
-        bg.classList.add('active');
-      }else{
-        bg.classList.remove('active');
-        vid.pause();
-      }
+      const vid=entry.target.querySelector('.chapter-bg video');
+      if(!vid)return;
+      if(entry.isIntersecting){ if(vid.readyState===0) vid.load(); vid.play().catch(()=>{}); }
+      else{ vid.pause(); }
     });
-  },{threshold:0.08});
-  document.querySelectorAll('.category-group').forEach(g=>bgObs.observe(g));
+  },{threshold:.05});
+  chapters.forEach(c=>bgObs.observe(c));
 
-  // Reveal
-  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*70);});},{threshold:.08});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  if(!reduced){
+    let ticking=false;
+    function parallax(){
+      chapters.forEach(c=>{
+        const r=c.getBoundingClientRect();
+        const bg=c.querySelector('.chapter-bg video, .chapter-bg img');
+        if(!bg)return;
+        if(r.bottom>0 && r.top<window.innerHeight){
+          const p=(r.top)/window.innerHeight; // -1..1 approx
+          bg.style.transform='translateY('+(p*30)+'px) scale(1.06)';
+        }
+      });
+      ticking=false;
+    }
+    window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(parallax);ticking=true;}},{passive:true});
+    parallax();
+  }
 
-  // Filters
-  document.querySelectorAll('.filter-tab').forEach(tab=>{
-    tab.addEventListener('click',()=>{
-      document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
-      tab.classList.add('active');
-      const f=tab.dataset.filter;
-      document.querySelectorAll('.category-group').forEach(g=>{g.style.display=(f==='all'||g.dataset.group===f)?'':'none';});
-    });
+  /* ---- Timeline rail: build ticks, track active chapter, drive playhead ---- */
+  const rail=document.querySelector('.timeline-rail');
+  const ticksEl=document.getElementById('timelineTicks');
+  const fillEl=document.getElementById('timelineFill');
+  const navChapter=document.getElementById('navChapter');
+  const mobileProgress=document.getElementById('mobileProgress');
+  const lang=()=>document.documentElement.classList.contains('lang-en')?'en':'es';
+
+  const tickItems=[];
+  chapters.forEach((c,i)=>{
+    const li=document.createElement('li');li.className='tick';
+    const btn=document.createElement('button');btn.className='tick-btn';btn.setAttribute('aria-label',c.dataset.label);
+    btn.innerHTML='<span class="tick-dot"></span>';
+    const lbl=document.createElement('span');lbl.className='tick-label';lbl.textContent=(i<10?'0'+i:i)+' — '+c.dataset.label;
+    btn.appendChild(lbl);
+    btn.addEventListener('click',()=>c.scrollIntoView({behavior:reduced?'auto':'smooth'}));
+    li.appendChild(btn);
+    ticksEl.appendChild(li);
+    tickItems.push({chapter:c,li,lbl});
   });
 
-  // Modal / enlaces
+  function positionTicks(){
+    const total=document.documentElement.scrollHeight-window.innerHeight;
+    tickItems.forEach(t=>{
+      const top=t.chapter.offsetTop;
+      const pct=Math.min(100,Math.max(0,(top/total)*100));
+      t.li.style.top=pct+'%';
+    });
+  }
+
+  const activeObs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      const item=tickItems.find(t=>t.chapter===entry.target);
+      if(!item)return;
+      if(entry.isIntersecting){
+        tickItems.forEach(t=>t.li.classList.remove('active'));
+        item.li.classList.add('active');
+        navChapter.textContent=item.lbl.textContent;
+        navChapter.classList.toggle('show',entry.target.id!=='hero');
+      }
+    });
+  },{threshold:.5});
+  chapters.forEach(c=>activeObs.observe(c));
+
+  let railTicking=false;
+  function updateFill(){
+    const total=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=total>0?(window.scrollY/total)*100:0;
+    fillEl.style.height=pct+'%';
+    mobileProgress.style.width=pct+'%';
+    railTicking=false;
+  }
+  window.addEventListener('scroll',()=>{if(!railTicking){requestAnimationFrame(updateFill);railTicking=true;}},{passive:true});
+  window.addEventListener('resize',()=>{positionTicks();updateFill();});
+  positionTicks();updateFill();
+
+  /* ---- Modal / video links ---- */
   const modal=document.getElementById('modal');
   const embed=document.getElementById('modalEmbed');
   document.querySelectorAll('.video-card').forEach(card=>{
+    card.style.cursor='none';
     card.addEventListener('click',()=>{
       const url=card.dataset.url;
       if(!url)return;
@@ -509,7 +576,7 @@
         embed.src='https://www.youtube.com/embed/'+id+'?autoplay=1';
         modal.classList.add('open');
       }else{
-        window.open(url,'_blank');
+        window.open(url,'_blank','noopener');
       }
     });
   });
@@ -517,18 +584,18 @@
   modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('open');embed.src='';}});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){modal.classList.remove('open');embed.src='';}});
 
-  // Language switcher
-  function setLang(lang) {
-    document.documentElement.className = document.documentElement.className.replace(/lang-\S+/g, '') + ' lang-' + lang;
-    document.documentElement.lang = lang;
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.lang-btn[onclick*=\'' + lang + '\']').classList.add('active');
-    localStorage.setItem('portfolio-lang', lang);
-  }
-  // Restore saved lang
-  const savedLang = localStorage.getItem('portfolio-lang');
-  if (savedLang) setLang(savedLang);
-
+  /* ---- Language switcher ---- */
+  window.setLang=function(l){
+    document.documentElement.className=document.documentElement.className.replace(/lang-\S+/g,'')+' lang-'+l;
+    document.documentElement.lang=l;
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelector('.lang-btn[onclick*=\''+l+'\']').classList.add('active');
+    localStorage.setItem('portfolio-lang',l);
+    tickItems.forEach((t,i)=>{t.lbl.textContent=(i<10?'0'+i:i)+' — '+t.chapter.dataset.label;});
+  };
+  const saved=localStorage.getItem('portfolio-lang');
+  if(saved) setLang(saved);
+})();
 </script>
 </body>
 </html>
