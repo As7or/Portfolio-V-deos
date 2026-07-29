@@ -128,6 +128,11 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .monitor-corner.tr{top:5px;right:5px;border-left:none;border-bottom:none;}
 .monitor-corner.bl{bottom:5px;left:5px;border-right:none;border-top:none;}
 .monitor-corner.br{bottom:5px;right:5px;border-left:none;border-top:none;}
+.monitor-static{position:absolute;inset:5px;z-index:3;opacity:0;pointer-events:none;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E"),repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0px,rgba(255,255,255,.05) 1px,transparent 1px,transparent 3px);}
+.monitor-frame.glitching .monitor-static{animation:staticPulse .5s var(--ease-in-out) 1;}
+.monitor-frame.glitching video{animation:staticJitter .5s var(--ease-in-out) 1;}
+@keyframes staticPulse{0%{opacity:0}35%{opacity:.9}65%{opacity:.75}100%{opacity:0}}
+@keyframes staticJitter{0%{transform:translateX(0);filter:saturate(1.2) contrast(1.06) brightness(.96);}30%{transform:translateX(-4px);filter:saturate(.2) contrast(1.5) brightness(1.5);}55%{transform:translateX(3px);filter:saturate(.4) contrast(1.3) brightness(1.2);}80%{transform:translateX(-1px);filter:saturate(1) contrast(1.1) brightness(1);}100%{transform:translateX(0);filter:saturate(1.2) contrast(1.06) brightness(.96);}}
 .monitor-chrome{position:absolute;left:5px;right:5px;bottom:5px;display:flex;justify-content:space-between;align-items:center;padding:.55rem .75rem;background:linear-gradient(to top,rgba(8,8,10,.85),transparent);font-size:.62rem;letter-spacing:.1em;color:var(--cream);font-variant-numeric:tabular-nums;}
 .rec{display:flex;align-items:center;gap:.4rem;color:#e0b8a8;}
 .rec-dot{width:6px;height:6px;border-radius:50%;background:#c0463f;animation:recPulse 1.6s ease-in-out infinite;}
@@ -260,7 +265,8 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
     </div>
     <div class="hero-monitor">
       <div class="monitor-frame">
-        <video src="img/bg_hero_web.mp4" autoplay muted loop playsinline></video>
+        <video id="monitorVideo" src="img/bg_hero_web.mp4" autoplay muted loop playsinline></video>
+        <div class="monitor-static" aria-hidden="true"></div>
         <div class="monitor-corner tl"></div><div class="monitor-corner tr"></div><div class="monitor-corner bl"></div><div class="monitor-corner br"></div>
         <div class="monitor-chrome"><span class="rec"><span class="rec-dot"></span>REC</span><span class="monitor-tc" id="monitorTc">00:00:00:00</span></div>
       </div>
@@ -506,6 +512,28 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
 <script>
 (function(){
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Hero monitor: video rotation every 5s with a static-noise cut ---- */
+  const monitorVideo=document.getElementById('monitorVideo');
+  const monitorFrame=document.querySelector('.monitor-frame');
+  if(monitorVideo && monitorFrame){
+    const reel=['img/bg_hero_web.mp4','img/bg_depol_web.mp4','img/bg_macarena_web.mp4','img/bg_manyer_web.mp4','img/bg_relifiction_web.mp4'];
+    let idx=0, heroInView=true;
+    new IntersectionObserver(([e])=>{heroInView=e.isIntersecting;},{threshold:.1}).observe(document.getElementById('hero'));
+    setInterval(()=>{
+      if(!heroInView)return;
+      idx=(idx+1)%reel.length;
+      if(reduced){
+        monitorVideo.src=reel[idx];monitorVideo.load();monitorVideo.play().catch(()=>{});
+        return;
+      }
+      monitorFrame.classList.add('glitching');
+      setTimeout(()=>{
+        monitorVideo.src=reel[idx];monitorVideo.load();monitorVideo.play().catch(()=>{});
+      },170);
+      setTimeout(()=>{monitorFrame.classList.remove('glitching');},520);
+    },5000);
+  }
 
   /* ---- Hero monitor: live timecode readout ---- */
   const tc=document.getElementById('monitorTc');
