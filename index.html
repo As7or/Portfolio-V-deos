@@ -169,6 +169,7 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .video-card.medium{grid-column:span 6;}
 .video-card.small{grid-column:span 4;}
 .video-card.wide{grid-column:span 12;}
+.video-card.centered{grid-column:4 / span 6;}
 .video-card:nth-child(even){transform:translateY(-.6rem);}
 .video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .7s var(--ease-out),filter .5s var(--ease-out);filter:grayscale(18%) brightness(.94);}
 .video-thumb.vertical{aspect-ratio:9/16;max-height:300px;}
@@ -251,7 +252,7 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
 
 <!-- 00 — HERO -->
 <section class="chapter hero" id="hero" data-label="Ástor Entenza">
-  <video class="hero-ambient" src="img/bg_hero_web.mp4" autoplay="" muted="" loop="" playsinline="" aria-hidden="true"></video>
+  <video class="hero-ambient" src="fondo/bg_hero_web.mp4" autoplay="" muted="" loop="" playsinline="" aria-hidden="true"></video>
   <div class="hero-grid">
     <div class="hero-copy">
       <div class="hero-tag">Video Producer · Editor · Community Manager</div>
@@ -261,7 +262,7 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
     </div>
     <div class="hero-monitor">
       <div class="monitor-frame">
-        <video src="img/bg_hero_web.mp4" autoplay="" muted="" loop="" playsinline=""></video>
+        <video src="fondo/bg_hero_web.mp4" autoplay="" muted="" loop="" playsinline=""></video>
         <div class="monitor-corner tl"></div><div class="monitor-corner tr"></div><div class="monitor-corner bl"></div><div class="monitor-corner br"></div>
         <div class="monitor-chrome"><span class="rec"><span class="rec-dot"></span>REC</span><span class="monitor-tc" id="monitorTc">00:01:06:01</span></div>
       </div>
@@ -305,7 +306,7 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
 
 <!-- 02 — DEPOL -->
 <section class="chapter" id="depol" data-label="DEPOL Formación">
-  <div class="chapter-bg"><video src="img/bg_depol_web.mp4" muted="" loop="" playsinline="" preload="none"></video></div>
+  <div class="chapter-bg"><video muted="" loop="" playsinline="" preload="none"><source src="fondo/bg_depol_1080.webm" type="video/webm; codecs=&quot;av01.0.08M.08&quot;"><source src="fondo/bg_depol_1080.mp4" type="video/mp4"></video></div>
   <div class="chapter-inner">
     <div class="chapter-head reveal">
       <span class="chapter-num">02</span>
@@ -380,7 +381,7 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
 
 <!-- 04 — MANYER -->
 <section class="chapter" id="manyer" data-label="Manyer">
-  <div class="chapter-bg"><video src="img/bg_manyer_web.mp4" muted="" loop="" playsinline="" preload="none"></video></div>
+  <div class="chapter-bg"><video muted="" loop="" playsinline="" preload="none"><source src="fondo/bg_hero_web.mp4" type="video/mp4"></video></div>
   <div class="chapter-inner">
     <div class="chapter-head reveal">
       <span class="chapter-num">04</span>
@@ -420,7 +421,7 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
 
 <!-- 05 — RELIFICTION -->
 <section class="chapter" id="relifiction" data-label="Relifiction">
-  <div class="chapter-bg"><video src="img/bg_relifiction_web.mp4" muted="" loop="" playsinline="" preload="none"></video></div>
+  <div class="chapter-bg"><video muted="" loop="" playsinline="" preload="none"><source src="fondo/bg_sith_720.webm" type="video/webm; codecs=&quot;av01.0.08M.08&quot;"><source src="fondo/bg_sith_720.mp4" type="video/mp4"></video></div>
   <div class="chapter-inner">
     <div class="chapter-head reveal">
       <span class="chapter-num">05</span>
@@ -429,8 +430,8 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
       <p class="chapter-role"><span data-lang="es">Productora Audiovisual · 2024–2025</span><span data-lang="en">Audiovisual Production · 2024–2025</span></p>
     </div>
     <div class="video-grid">
-      <div class="video-card wide reveal" data-url="https://youtu.be/8Rz8KlZymrI">
-        <img class="video-thumb" src="https://img.youtube.com/vi/8Rz8KlZymrI/maxresdefault.jpg" onerror="this.src=&#39;https://img.youtube.com/vi/8Rz8KlZymrI/hqdefault.jpg&#39;" alt="Corto VFX de un Sith para Relifiction, hecho con Blender y After Effects">
+      <div class="video-card medium centered reveal" data-url="https://youtu.be/8Rz8KlZymrI">
+        <img class="video-thumb" src="img/rel_sith.jpg" alt="Corto VFX de un Sith para Relifiction, hecho con Blender y After Effects">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"></polygon></svg></div>
         <div class="video-overlay"><div class="video-platform">YouTube · Relifiction</div><div class="video-title"><span data-lang="es">Sith · Corto VFX</span><span data-lang="en">Sith · VFX Short</span></div><div class="video-desc"><span data-lang="es">Blender + After Effects · 10 s</span><span data-lang="en">Blender + After Effects · 10 s</span></div></div>
       </div>
