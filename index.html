@@ -429,8 +429,8 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
       <p class="chapter-role"><span data-lang="es">Productora Audiovisual · 2024–2025</span><span data-lang="en">Audiovisual Production · 2024–2025</span></p>
     </div>
     <div class="video-grid">
-      <div class="video-card wide reveal" data-url="https://youtu.be/VNSns6ZBm70">
-        <img class="video-thumb" src="https://img.youtube.com/vi/VNSns6ZBm70/maxresdefault.jpg" onerror="this.src=&#39;https://img.youtube.com/vi/VNSns6ZBm70/hqdefault.jpg&#39;" alt="Corto VFX de un Sith para Relifiction, hecho con Blender y After Effects">
+      <div class="video-card wide reveal" data-url="https://youtu.be/8Rz8KlZymrI">
+        <img class="video-thumb" src="https://img.youtube.com/vi/8Rz8KlZymrI/maxresdefault.jpg" onerror="this.src=&#39;https://img.youtube.com/vi/8Rz8KlZymrI/hqdefault.jpg&#39;" alt="Corto VFX de un Sith para Relifiction, hecho con Blender y After Effects">
         <div class="play-btn"><svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"></polygon></svg></div>
         <div class="video-overlay"><div class="video-platform">YouTube · Relifiction</div><div class="video-title"><span data-lang="es">Sith · Corto VFX</span><span data-lang="en">Sith · VFX Short</span></div><div class="video-desc"><span data-lang="es">Blender + After Effects · 10 s</span><span data-lang="en">Blender + After Effects · 10 s</span></div></div>
       </div>
@@ -672,4 +672,10 @@ footer.site-footer{margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(-
 </script>
 
 
+<script>
+document.querySelectorAll('img[src*="img.youtube.com/vi/"]').forEach(function(img){
+  function check(){ if(img.naturalWidth && img.naturalWidth<=120 && img.src.indexOf('maxresdefault')>-1){ img.src=img.src.replace('maxresdefault','hqdefault'); } }
+  if(img.complete) check(); else img.addEventListener('load',check);
+});
+</script>
 </body></html>
